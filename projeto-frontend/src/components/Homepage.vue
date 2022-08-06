@@ -44,7 +44,7 @@
     <div class="row footer-row">
       <div class="col-md-offset-1 col-md-10">
         <div class="footer">
-          <p>©2020 UNIRIO, Universidade Federal do Estado do Rio de Janeiro</p>
+          <p>©2022 UNIRIO, Universidade Federal do Estado do Rio de Janeiro</p>
         </div>
       </div>
     </div>
