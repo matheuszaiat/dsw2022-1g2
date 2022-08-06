@@ -28,6 +28,7 @@
           <td>{{item.descricao}}</td>
           <td>{{item.tipo}}</td>
           <td>
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true" @click="mostrarDescricao(item)"></span>
             <span class="glyphicon glyphicon-pencil" aria-hidden="true" @click="edita(item)"></span>
             <span class="glyphicon glyphicon-remove" aria-hidden="true" @click="remove(item)"></span>
           </td>
@@ -108,6 +109,13 @@ export default {
     edita: function(item) {
       this.$router.push({
           name: 'item-update',
+          params: { item: item }
+      });
+    },
+    //Função que eu criei, precisa fazer o router funcionar'
+    mostrarDescricao: function(item) {
+      this.$router.push({
+          name: 'item-mostrar-descricao',
           params: { item: item }
       });
     },
