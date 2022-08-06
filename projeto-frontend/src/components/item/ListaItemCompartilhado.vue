@@ -9,6 +9,12 @@
         <div class="new-button">
           <button type="button" class="btn btn-primary" @click="novo">Novo Item</button>
         </div>
+
+        <div class="new-button">
+          <input type="text" v-model="filtro" id="filtro">
+          <button type="button" class="btn btn-primary" @click="filtraBusca">Filtrar</button>
+        </div>
+
         <div class="clear"></div>
       </div>
 
@@ -61,6 +67,7 @@ export default {
       page: 1,
       totalPages: 1,
       items: [],
+      filtro: "",
 
       httpOptions: {
           baseURL: this.$root.config.url,
@@ -81,6 +88,21 @@ export default {
     processForm: function() {
       axios.get("/api/item/lista?sort=&per_page=10&page=" + this.page, this.httpOptions)
         .then(response => {
+          this.items = response.data.data.data;
+          this.page = response.data.data.current_page;
+          this.totalPages = response.data.data.last_page;
+          this.error = {};
+        })
+        .catch(error => {
+          this.error = error.response.data.errors;
+        });
+    },
+
+    filtraBusca: function(){
+      
+      axios.get("/api/item/busca?filtro=" + this.filtro + "&sort=&per_page=10&page=" + this.page, this.httpOptions)
+        .then(response => {
+          console.log(response.data.data.data);
           this.items = response.data.data.data;
           this.page = response.data.data.current_page;
           this.totalPages = response.data.data.last_page;

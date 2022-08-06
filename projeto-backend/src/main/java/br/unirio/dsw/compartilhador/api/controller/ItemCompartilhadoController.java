@@ -83,6 +83,42 @@ public class ItemCompartilhadoController
 		
 		return ControllerResponse.success(result);
 	}
+
+	/**
+	 * Ação que filtra uma busca por um item compartilhado do usuário
+	 */
+	@GetMapping(value = "/busca")
+	public ResponseEntity<ResponseData> filtra(@RequestParam String filtro, @RequestParam int page, @RequestParam int per_page){
+		log.info("Filtrando items dono");
+		log.info(filtro);
+	
+		String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (username == null)
+			return ControllerResponse.fail("Não há um usuário logado no sistema.");
+
+        Usuario usuario = usuarioRepositorio.findByEmail(username);
+
+		if (usuario == null)
+			return ControllerResponse.fail("Não foi possível recuperar os dados do usuário a partir das credenciais.");
+		
+		Pageable pageable = PageRequest.of(page-1, per_page);
+		Page<ItemCompartilhado> itens = itemRepositorio.findByUsuarioId(usuario.getId(), filtro, pageable);
+
+		PageDTO<ItemCompartilhadoDTO> result = new PageDTO<ItemCompartilhadoDTO>(itens.getTotalElements(), page, per_page);
+		
+		itens.forEach(item -> {
+			ItemCompartilhadoDTO dto = new ItemCompartilhadoDTO();
+			dto.setId(item.getId());
+			dto.setNome(item.getNome());
+			dto.setDescricao(item.getDescricao());
+			dto.setTipo(item.getTipo().toString());
+			result.add(dto);
+		});
+		
+		return ControllerResponse.success(result);
+	}
+	
 	
 	/**
 	 * Ação que cria um novo item compartilhado
