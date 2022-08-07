@@ -119,7 +119,6 @@ public class ItemCompartilhadoController
 		return ControllerResponse.success(result);
 	}
 	
-	
 	/**
 	 * Ação que cria um novo item compartilhado
 	 */

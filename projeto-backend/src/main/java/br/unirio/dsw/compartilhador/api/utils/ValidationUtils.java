@@ -34,4 +34,17 @@ public class ValidationUtils
 		
 		return (password.length() >= 8) && password.matches(".*[a-zA-Z].*") && password.matches(".*[0-9].*");
 	}
+	
+
+	/**
+	 * Valida uma data de acordo com o formato "aaaa-mm-dd"
+	 */
+	public static boolean validDate(String date) {
+		
+		if (date == null)
+			return false;
+		
+		return (date.matches("^((19|2[0-9])[0-9]{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$"));
+	}
+	
 }
