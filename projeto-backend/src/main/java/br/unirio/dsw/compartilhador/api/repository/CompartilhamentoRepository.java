@@ -27,10 +27,10 @@ public interface CompartilhamentoRepository extends JpaRepository<Compartilhamen
 	List<Compartilhamento> findByUsuarioIdAndAceito(Long usuarioId, boolean aceito);
 
 	// Achar compartilhamentos de um item
-	@Query("SELECT co FROM Compartilhamento co WHERE co.itemcompartilhado.id = :itemId")
+	@Query("SELECT co FROM Compartilhamento co WHERE co.item.id = :itemId")
 	Page<Compartilhamento> findByItemId(@Param("itemId") Long itemId, Pageable pageable);
 	
 	// Achar número de compartilhamento em aberto
-	@Query("SELECT co FROM Compartilhamento co WHERE co.usuario.id = :usuarioId AND co.aceito = false AND co.rejeitado = false AND co.cancelado_dono = false AND co.cancelado_usuario = false")
+	@Query("SELECT co FROM Compartilhamento co WHERE co.usuario.id = :usuarioId AND co.aceito = false AND co.rejeitado = false AND co.canceladoDono = false AND co.canceladoUsuario = false")
 	List<Compartilhamento> findByUsuarioIdAndAberto(@Param("usuarioId") Long usuarioId);
 }
