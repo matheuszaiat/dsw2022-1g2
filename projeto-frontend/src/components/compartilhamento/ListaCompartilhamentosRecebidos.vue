@@ -6,15 +6,6 @@
           <h2 class="form-title">Compartilhamentos</h2>
           <h6 class="form-subtitle">Abaixo estão os seus compartilhamentos recebidos.</h6>
         </div>
-        <div class="new-button">
-          <button type="button" class="btn btn-primary" @click="novo">Novo Item</button>
-        </div>
-
-        <div class="new-button">
-          <input type="text" v-model="filtro" id="filtro">
-          <button type="button" class="btn btn-primary" @click="filtraBusca">Filtrar</button>
-        </div>
-
         <div class="clear"></div>
       </div>
 
@@ -31,15 +22,16 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in this.compartilhamentos">
-          <td>{{item.itemNome}}</td>
-          <td>{{item.nomeUsuario}}</td>
-          <td>{{item.dataInicio}}</td>
-          <td>{{item.dataTermino}}</td>
-          <td>{{item.status}}</td>
-          <td>
-            <button>Aceita</button>
-            <button>Rejeita</button>
+        <tr v-for="compartilhamento in this.compartilhamentos">
+          <td>{{compartilhamento.itemNome}}</td>
+          <td>{{compartilhamento.nomeUsuario}}</td>
+          <td>{{compartilhamento.dataInicio}}</td>
+          <td>{{compartilhamento.dataTermino}}</td>
+          <td>{{compartilhamento.status}}</td>
+          <td style="display:inline;">
+            <button type="button" class="btn btn-primary" style="background-color:Green;" @click="aceita(compartilhamento)">Aceitar</button>
+            <button type="button" class="btn btn-primary" style="background-color:Red;" @click="rejeita(compartilhamento)">Rejeitar</button>
+            <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
           </td>
         </tr>
       </tbody>
@@ -106,7 +98,7 @@ export default {
           this.error = error.response.data.errors;
         });
     },
-
+    /*
     processForm: function() {
       axios.get("/api/item/lista?sort=&per_page=10&page=" + this.page, this.httpOptions)
         .then(response => {
@@ -118,22 +110,7 @@ export default {
         .catch(error => {
           this.error = error.response.data.errors;
         });
-    },
-
-    filtraBusca: function(){
-      
-      axios.get("/api/item/busca?filtro=" + this.filtro + "&sort=&per_page=10&page=" + this.page, this.httpOptions)
-        .then(response => {
-          console.log(response.data.data.data);
-          this.items = response.data.data.data;
-          this.page = response.data.data.current_page;
-          this.totalPages = response.data.data.last_page;
-          this.error = {};
-        })
-        .catch(error => {
-          this.error = error.response.data.errors;
-        });
-    },
+    },*/
 
     moveTo: function(page) {
       if (page < 1) 
@@ -146,29 +123,16 @@ export default {
       this.processForm();
     },
 
-    novo: function() {
-      this.$router.push({ name: 'item-new' });
+    aceita: function(compartilhamento) {
+      this.$router.push({ name: 'aceita-compartilhamento',  params: {compartilhamento: compartilhamento}});
     },
 
-    edita: function(item) {
-      this.$router.push({
-          name: 'item-update',
-          params: { item: item }
-      });
-    },
-    //Função que eu criei, precisa fazer o router funcionar'
-    mostrarDescricao: function(item) {
-      this.$router.push({
-          name: 'item-mostrar-descricao',
-          params: { item: item }
-      });
+    rejeita: function(compartilhamento) {
+      this.$router.push({ name: 'rejeita-compartilhamento', params: {compartilhamento: compartilhamento}});
     },
 
-    remove: function(item) {
-      this.$router.push({
-          name: 'item-delete',
-          params: { item: item }
-      });
+    cancela: function(compartilhamento) {
+      this.$router.push({ name: 'cancela-compartilhamento', params: {compartilhamento: compartilhamento}});
     }
   }
 }

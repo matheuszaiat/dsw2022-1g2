@@ -7,9 +7,9 @@
 
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-left" style="display: inline">
-            <li v-if="$root.credentials">
-              <router-link class="link" :to="{ name: 'item-list' }">Itens</router-link>
-              <router-link class="link" :to="{ name: 'lista-recebida' }">Lista Compartilhamentos Recebidos</router-link>
+            <li class="user-commands" v-if="$root.credentials">
+              <router-link class="link" :to="{ name: 'item-list' }">Itens</router-link> |
+              <router-link class="link" :to="{ name: 'lista-recebida' }">Compartilhamentos Recebidos</router-link>
             </li>
         </ul>
 

@@ -25,7 +25,12 @@ import NovoItemCompartilhado from './components/item/NovoItemCompartilhado.vue'
 import AtualizaItemCompartilhado from './components/item/AtualizaItemCompartilhado.vue'
 import RemoveItemCompartilhado from './components/item/RemoveItemCompartilhado.vue'
 import MostrarDetalhesItemCompartilhado from './components/item/MostrarDetalhesItemCompartilhado.vue'
-import ListaCompartilhamentosRecebidos from './components/item/ListaCompartilhamentosRecebidos.vue'
+
+/* Compartilhamentos recebidos*/
+import ListaCompartilhamentosRecebidos from './components/compartilhamento/ListaCompartilhamentosRecebidos.vue'
+import AceitaCompartilhamentosRecebidos from './components/compartilhamento/AceitaCompartilhamentosRecebidos.vue'
+import RejeitaCompartilhamentosRecebidos from './components/compartilhamento/RejeitaCompartilhamentosRecebidos.vue'
+import CancelaCompartilhamentosRecebidos from './components/compartilhamento/CancelaCompartilhamentosRecebidos.vue'
 
 Vue.use(Router)
 
@@ -111,9 +116,27 @@ const router = new Router({
     props: true
   },
   {
-    path: '/lista',
+    path: '/compartilhamento/lista',
     name: 'lista-recebida',
     component: ListaCompartilhamentosRecebidos,
+  },
+  {
+    path: '/compartilhamento/aceitar',
+    name: 'aceita-compartilhamento',
+    component: AceitaCompartilhamentosRecebidos,
+    props: true
+  },
+  {
+    path: '/compartilhamento/rejeitar',
+    name: 'rejeita-compartilhamento',
+    component: RejeitaCompartilhamentosRecebidos,
+    props: true
+  },
+  {
+    path: '/compartilhamento/cancelar',
+    name: 'cancela-compartilhamento',
+    component: CancelaCompartilhamentosRecebidos,
+    props:true
   }
 ]
 })
