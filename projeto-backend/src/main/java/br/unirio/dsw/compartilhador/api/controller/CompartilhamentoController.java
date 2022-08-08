@@ -70,7 +70,7 @@ public class CompartilhamentoController {
 	 * Ação que cria um novo compartilhamento
 	 */
 	@PostMapping(value = "/novo")
-	public ResponseEntity<ResponseData> novo(@RequestParam CompartilhamentoRegistroForm form, BindingResult result)
+	public ResponseEntity<ResponseData> novo(@RequestBody CompartilhamentoRegistroForm form, BindingResult result)
 	{
 		
 		Usuario usuario = usuarioRepositorio.findByEmail(form.getEmail());
@@ -293,41 +293,40 @@ public class CompartilhamentoController {
 		return ControllerResponse.success(result);
 	}
 	
+}
+/**
+ * Formulário para registro de um novo compartilhamento
+ * 
+ * @author Grupo
+ */
+@Data class CompartilhamentoRegistroForm
+{
+	private String email;
 	
-	/**
-	 * Formulário para registro de um novo compartilhamento
-	 * 
-	 * @author Grupo
-	 */
-	@Data class CompartilhamentoRegistroForm
-	{
-		private String email;
-		
-		private String item;
-		
-		private String dataInicio;
-		
-		private String dataTermino;
-	}
+	private String item;
 	
-	/**
-	 * Representa um compartilhamento para o usuário no lado cliente
-	 * 	
-	 * @author Grupo
-	 */
-	@Data class CompartilhamentoDTO
-	{
-		private long id;
-		
-		private String itemNome;
-		
-		private String nomeUsuario;
-		
-		private String dataInicio;
-		
-		private String dataTermino;
-		
-		private String status;
-		
-	}
+	private String dataInicio;
+	
+	private String dataTermino;
+}
+
+/**
+ * Representa um compartilhamento para o usuário no lado cliente
+ * 	
+ * @author Grupo
+ */
+@Data class CompartilhamentoDTO
+{
+	private long id;
+	
+	private String itemNome;
+	
+	private String nomeUsuario;
+	
+	private String dataInicio;
+	
+	private String dataTermino;
+	
+	private String status;
+	
 }
