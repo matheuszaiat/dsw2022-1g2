@@ -77,7 +77,6 @@ export default {
   },
 
   created: function () {
-    this.processForm();
     this.getCompartilhamentos();
   },  
 

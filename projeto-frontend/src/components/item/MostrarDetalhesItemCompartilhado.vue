@@ -81,8 +81,9 @@
     },
 
    created: function () {
-    console.log("AQUIIIIIIIIIII   ", this.compartilhar);
+    
     this.getCompartilhamentos();
+    console.log("AQUIIIIIIIIIII   ", this.compartilhamentos);
     
   },
   methods: {

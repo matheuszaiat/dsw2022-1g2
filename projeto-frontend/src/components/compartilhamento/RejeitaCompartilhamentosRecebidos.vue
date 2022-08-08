@@ -25,7 +25,7 @@
         <p class="label"><label>Data de Término</label></p>
         <p class="text" >{{compartilhamento.dataTermino}}</p>
 
-        <button type="submit" class="btn btn-danger" style="background-color: Red;" @click="rejeita">Sim, rejeitar o compartilhamento</button>
+        <button type="submit" class="btn btn-danger" style="background-color: Red;" @click="rejeita()">Sim, rejeitar o compartilhamento</button>
       </div>
     </div>
   </div>
@@ -41,6 +41,10 @@ export default {
     return {
       error: false,
       success: false,
+      rejeitar: {
+        id: this.compartilhamento.id,
+        aceita: false
+      },
 
       httpOptions: {
           baseURL: this.$root.config.url,
@@ -55,7 +59,7 @@ export default {
 
   methods: {
     rejeita: function() {
-      axios.post("/api/compartilhamento/aceita?id=" + this.compartilhamento.id + "&aceita=false", this.httpOptions)
+      axios.post("/api/compartilhamento/aceita", this.rejeitar, this.httpOptions)
         .then(response => {
           this.success = true;
           this.error = false;
