@@ -28,11 +28,23 @@
           <td>{{compartilhamento.dataInicio}}</td>
           <td>{{compartilhamento.dataTermino}}</td>
           <td>{{compartilhamento.status}}</td>
-          <td style="display:inline;">
-            <button type="button" class="btn btn-primary" style="background-color:Green;" @click="aceita(compartilhamento)">Aceitar</button>
-            <button type="button" class="btn btn-primary" style="background-color:Red;" @click="rejeita(compartilhamento)">Rejeitar</button>
-            <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
-          </td>
+
+          <template v-if="compatilhamento.status === 'Aberto.' ">
+            <td style="display:inline;">
+              <button type="button" class="btn btn-primary" style="background-color:Green;" @click="aceita(compartilhamento)">Aceitar</button>
+              <button type="button" class="btn btn-primary" style="background-color:Red;" @click="rejeita(compartilhamento)">Rejeitar</button>
+              <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
+            </td>
+          </template>
+          <template v-if="compartilhamento.status === 'Aceito.' || compartilhamento.status === 'Rejeitado.'">
+            <td style="display:inline;">
+              <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
+            </td>
+          </template>
+          <template v-else>
+            <td style="display:inline;">
+            </td>
+          </template>
         </tr>
       </tbody>
       </table>
