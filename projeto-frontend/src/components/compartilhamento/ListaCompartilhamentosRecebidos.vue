@@ -12,8 +12,8 @@
       <table class="table table-striped" id="tbItens">
       <thead>
         <tr>
-          <th>Nome</th>
-          <th>Usuário</th>
+          <th>Item Compartilhado</th>
+          <th>Dono do Item</th>
           <th>Data de Início</th>
           <th>Data de Término</th>
           <th>Status</th>
@@ -22,30 +22,38 @@
       </thead>
 
       <tbody>
-        <tr v-for="compartilhamento in this.compartilhamentos">
-          <td>{{compartilhamento.itemNome}}</td>
-          <td>{{compartilhamento.nomeUsuario}}</td>
-          <td>{{compartilhamento.dataInicio}}</td>
-          <td>{{compartilhamento.dataTermino}}</td>
-          <td>{{compartilhamento.status}}</td>
+        <template>
+          <tr v-for="compartilhamento in this.compartilhamentos">
+            <td>{{compartilhamento.itemNome}}</td>
+            <td>{{compartilhamento.nomeUsuario}}</td>
+            <td>{{compartilhamento.dataInicio}}</td>
+            <td>{{compartilhamento.dataTermino}}</td>
+            <td>{{compartilhamento.status}}</td>
 
-          <template v-if="compatilhamento.status === 'Aberto.' ">
-            <td style="display:inline;">
-              <button type="button" class="btn btn-primary" style="background-color:Green;" @click="aceita(compartilhamento)">Aceitar</button>
-              <button type="button" class="btn btn-primary" style="background-color:Red;" @click="rejeita(compartilhamento)">Rejeitar</button>
-              <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
-            </td>
-          </template>
-          <template v-if="compartilhamento.status === 'Aceito.' || compartilhamento.status === 'Rejeitado.'">
-            <td style="display:inline;">
-              <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
-            </td>
-          </template>
-          <template v-else>
-            <td style="display:inline;">
-            </td>
-          </template>
-        </tr>
+            <template v-if="compartilhamento.status === 'Aberto.' ">
+              <td style="display:inline-block; margin:2px;">
+                <button type="button" class="btn btn-primary acept" @click="aceita(compartilhamento)">Aceitar</button>
+                <button type="button" class="btn btn-primary reject" @click="rejeita(compartilhamento)">Rejeitar</button>
+                <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
+              </td>
+            </template>
+            <template v-else-if="compartilhamento.status === 'Aceito.'">
+              <td style="display:inline-block;">
+                <button type="button" class="btn btn-primary reject" @click="rejeita(compartilhamento)">Rejeitar</button>
+                <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
+              </td>
+            </template>
+            <template v-else-if="compartilhamento.status === 'Rejeitado.'">
+              <td style="display:inline;">
+                <button type="button" class="btn btn-primary" @click="cancela(compartilhamento)">Cancelar</button>
+              </td>
+            </template>
+            <template v-else>
+              <td style="display:inline;">
+              </td>
+            </template>
+          </tr>
+        </template>
       </tbody>
       </table>
 
@@ -109,19 +117,6 @@ export default {
           this.error = error.response.data.errors;
         });
     },
-    /*
-    processForm: function() {
-      axios.get("/api/item/lista?sort=&per_page=10&page=" + this.page, this.httpOptions)
-        .then(response => {
-          this.items = response.data.data.data;
-          this.page = response.data.data.current_page;
-          this.totalPages = response.data.data.last_page;
-          this.error = {};
-        })
-        .catch(error => {
-          this.error = error.response.data.errors;
-        });
-    },*/
 
     moveTo: function(page) {
       if (page < 1) 
@@ -189,5 +184,19 @@ div.header {
 div.new-button {
   float: right;
   text-align: right;
+}
+.reject{
+  background-color:Red; 
+  margin:2px;
+}
+.reject:hover{
+  background-color:DarkRed;
+}
+.acept{
+  background-color:Green; 
+  margin:2px;
+}
+.acept:hover{
+  background-color:DarkGreen;
 }
 </style>
