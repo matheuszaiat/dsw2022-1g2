@@ -145,10 +145,10 @@ public class CompartilhamentoController {
 	 * Ação que aceita ou rejeita um compartilhamento de um usuário
 	 */
 	@PostMapping(value="/aceita")
-	public ResponseEntity<ResponseData> aceita(@RequestParam long id, @RequestParam boolean aceita)
+	public ResponseEntity<ResponseData> aceita(@RequestBody Aceitar aceita)
 	{
-		log.info("Aceitando ou rejeitando um compartilhamento: {}", id);
-		log.info("Aceita?: {}", aceita);
+		log.info("Aceitando ou rejeitando um compartilhamento: {}", aceita.getId());
+		log.info("Aceita?: {}", aceita.getAceita());
 
 		String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -160,8 +160,8 @@ public class CompartilhamentoController {
         if (usuario == null)
 			return ControllerResponse.fail("Não foi possível recuperar os dados do usuário a partir das credenciais.");
 
-        Optional<Compartilhamento> compartilhamento = compartilhamentoRepositorio.findById(id);		
-		
+        Optional<Compartilhamento> compartilhamento = compartilhamentoRepositorio.findById(aceita.getId());
+        
         if (!compartilhamento.isPresent())
 			return ControllerResponse.fail("O compartilhamento não foi encontrado.");
         
@@ -170,7 +170,7 @@ public class CompartilhamentoController {
         											&& !compartilhamento.get().isCanceladoUsuario()) {
 			
         	//Verifica se é para aceitar ou rejeitar
-        	if (!compartilhamento.get().isAceito() && aceita == true) {
+        	if (!compartilhamento.get().isAceito() && aceita.getAceita() == true) {
         		compartilhamento.get().setAceito(true);
         	} else {
         		compartilhamento.get().setAceito(false);
@@ -329,4 +329,12 @@ public class CompartilhamentoController {
 	
 	private String status;
 	
+}
+
+@Data class Aceitar
+{
+	private long id;
+
+	private Boolean aceita;
+
 }
