@@ -5,7 +5,10 @@
         <div class="col-md-offset-1 col-md-10">
           <div class="jumbotron text-center">
             <h1>Bem vindo!</h1>
-            <h2 v-if="$root.credentials">Você possui: {{ this.compartilhamentosAbertos }} compartilhamentos abertos</h2>
+            <div v-if="$root.credentials">
+              <h2 v-if="compartilhamentosAbertos">Você possui: {{ this.compartilhamentosAbertos }} compartilhamentos abertos</h2>
+            </div>
+            
             <p class="lead">Nesta aplicação você consegue criar e compartilhar itens.</p>
             
             <p v-if="!$root.credentials">
@@ -113,4 +116,6 @@ div.jumbotron-row {
     color: #777;
     border-top: 1px solid #e5e5e5;
 }
+
+
 </style>
