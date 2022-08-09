@@ -119,7 +119,6 @@ export default {
           //this.success = true;
           this.page = response.data.data.current_page;
           this.compartilhamentos = response.data.data.data;
-          console.log(this.compartilhamentos);
           this.error = {};
           
           //setTimeout(this.goBackToList, 3000);

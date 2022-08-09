@@ -5,12 +5,12 @@
         <div class="col-md-offset-1 col-md-10">
           <div class="jumbotron text-center">
             <h1>Bem vindo!</h1>
-            <h1 v-if="this.logado">Você possui: {{ this.compartilhamentosAbertos }} mensagens</h1>
+            <h2 v-if="$root.credentials">Você possui: {{ this.compartilhamentosAbertos }} compartilhamentos abertos</h2>
             <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
             
             <p v-if="!$root.credentials">
               <router-link class="link" :to="{ name: 'login' }">
-                <a class="btn btn-lg btn-success" href="#" role="button">Login</a>
+                <a class="btn btn-lg btn-success" href="#" role="button" >Login</a>
               </router-link>
             </p>
           </div>
@@ -77,29 +77,24 @@ import axios from 'axios';
       
     },
     created: function(){
-      this.logado = false;
-      if(this.$root.credentials != null){
-        this.logado = !this.logado;
+     
+      if(this.$root.credentials != null){       
         this.getCompartilhamentosAbertos();
-        if(this.compartilhamentosAbertos != 0){
-          this.logado = true;
-        }
       }
     },
     methods:{
-    
-     getCompartilhamentosAbertos: function(){
+
+      getCompartilhamentosAbertos: function(){
         axios.get("/api/compartilhamento/abertos", this.httpOptions)
           .then(response => {
             this.compartilhamentosAbertos = response.data.data;
-            console.log("Heyyyyyyyyyyyyyyyy: ", this.compartilhamentosAbertos);
             //this.error = {};
           })
           .catch(error => {
           this.error = error.response.data.errors;
         });
-    },
-  }
+      },
+    }
   }
   
 </script>

@@ -102,7 +102,6 @@ export default {
       
       axios.get("/api/item/busca?filtro=" + this.filtro + "&sort=&per_page=10&page=" + this.page, this.httpOptions)
         .then(response => {
-          console.log(response.data.data.data);
           this.items = response.data.data.data;
           this.page = response.data.data.current_page;
           this.totalPages = response.data.data.last_page;
