@@ -10,7 +10,7 @@
       <li>Nome: {{ item.nome }}</li>
       <li>Descrição: {{ item.descricao }}</li>
       <li>Tipo do item: {{ item.tipo }}</li>
-      <button @click="compartilhador()">Compartilhar</button>
+      <button class="btn btn-primary" style="margin:20px" @click="compartilhador()">Compartilhar</button>
 
       <div v-if="compartilhar">
       <form class="form-items-compartilhados row" @submit.prevent="postarCompartilhamento()">
@@ -36,7 +36,7 @@
         <button type="submit" class="btn btn-primary">Envia</button>
       </form>
       </div>
-      <table class="table table-striped" id="tbItens">
+      <table class="table table-striped" id="tbItens" style="margin:6px;">
         <thead>
           <tr>
             <th>Id do uso</th>
@@ -56,7 +56,9 @@
               <td>{{uso.dataInicio}}</td>
               <td>{{uso.dataTermino}}</td>
               <td>{{uso.status}}</td>
-              <button class="btn btn-primary" @click="cancela(uso)">Cancelar compartilhamento</button>
+              <template v-if="uso.status === 'Aberto.' || uso.status === 'Aceito.'">
+                <button class="btn btn-primary" @click="cancela(uso)">Cancelar compartilhamento</button>
+              </template>
             
             </tr>
           </template>
