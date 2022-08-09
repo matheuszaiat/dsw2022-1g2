@@ -7,12 +7,12 @@
           <h6 class="form-subtitle">Abaixo estão os seus itens compartilhados.</h6>
         </div>
         <div class="new-button">
-          <button type="button" class="btn btn-primary" @click="novo">Novo Item</button>
+          <button type="button" class="btn btn-primary" style="margin: 3px;" @click="novo">Novo Item</button>
         </div>
 
         <div class="new-button">
           <input type="text" v-model="filtro" id="filtro">
-          <button type="button" class="btn btn-primary" @click="filtraBusca">Filtrar</button>
+          <button type="button" class="btn btn-primary" style="margin: 3px;" @click="filtraBusca">Filtrar</button>
         </div>
 
         <div class="clear"></div>
