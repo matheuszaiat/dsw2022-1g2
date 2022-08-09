@@ -6,7 +6,7 @@
           <div class="jumbotron text-center">
             <h1>Bem vindo!</h1>
             <h2 v-if="$root.credentials">Você possui: {{ this.compartilhamentosAbertos }} compartilhamentos abertos</h2>
-            <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p class="lead">Nesta aplicação você consegue criar e compartilhar itens.</p>
             
             <p v-if="!$root.credentials">
               <router-link class="link" :to="{ name: 'login' }">

@@ -1,4 +1,8 @@
 <template lang="html">
+
+<!-- Esta página mostra os detalhes do item compartilhado, seus usos/compartilhamentos e a possibilidade
+    de criar um novo compartilhamento -->
+
   <div class="bloco-descricao" v-if="this.$root.credentials">
     <div class="item-descricao"></div>
     <h1 class="form-title">Descrição do Item</h1>
@@ -13,17 +17,19 @@
         <div class="form-group">
           <label >Email do usuário</label>
           <input type="text" class="form-control" placeholder="Entre o email do usuário que receberá o item" v-model="formulario.email">
-          <span class="error" ></span>
+          <span class="error" v-if="error.email">{{error.email}}</span>
         </div>
 
         <div class="form-group">
           <div>
             <label for="descricao">Data de início</label>
             <input type="date" v-model="formulario.dataInicio">
+            <span class="error" v-if="error.dataInicio">{{error.dataInicio}}</span>
           </div>
           <div>
             <label for="descricao">Data de término</label>
             <input type="date" v-model="formulario.dataTermino">
+            <span class="error" v-if="error.dataTermino">{{error.dataTermino}}</span>
           </div>
         </div>
 
@@ -97,11 +103,9 @@
     },
 
    created: function () {
-    
     this.getCompartilhamentos();
-    console.log("AQUIIIIIIIIIII   ", this.compartilhamentos);
-    
   },
+
   methods: {
 
     goBackToList: function() {
@@ -115,9 +119,8 @@
       axios.post("/api/compartilhamento/novo", this.formulario, this.httpOptions)
         .then(response => {
           this.error = {};
-          console.log("SUCESSOOOOOO");
+          console.log("Sucesso");
           this.goBackToList();
-          //setTimeout(this.goBackToList, 3000);
         })
         .catch(error => {
           this.error = error.response.data.errors;
@@ -132,7 +135,6 @@
           this.compartilhamentos = response.data.data.data;
           this.error = {};
           
-          //setTimeout(this.goBackToList, 3000);
         })
         .catch(error => {
           this.error = error.response.data.errors;
@@ -144,10 +146,8 @@
     removerCompartilhamentos: function(compartilhamentoId){
       axios.delete("/api/compartilhamento/" + compartilhamentoId, this.httpOptions)
         .then(response => {
-          //this.success = true;
-          console.log("Cancelou!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.log("Cancelou");
           this.error = {};
-          //setTimeout(this.goBackToList, 3000);
         })
         .catch(error => {
           this.error = error.response.data.errors;

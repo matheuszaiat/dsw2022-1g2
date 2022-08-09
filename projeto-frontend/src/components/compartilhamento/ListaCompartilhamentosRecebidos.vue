@@ -1,4 +1,8 @@
 <template lang="html">
+
+<!-- Esta página mostra uma lista de todos os itens compartilhados para aquele usuário,
+    com as opções de aceitá-los, rejeitá-los e cancelá-los-->
+
   <div class="lista-items-compartilhados row" v-if="this.$root.credentials">
     <div class="col-md-10 col-md-offset-1 text-left">
       <div>
@@ -101,18 +105,7 @@ export default {
   },  
 
   methods: {
-      processForm: function() {
-      axios.get("/api/compartilhamento/lista?sort=&per_page=10&page=" + this.page, this.httpOptions)
-        .then(response => {
-          this.items = response.data.data.data;
-          this.page = response.data.data.current_page;
-          this.totalPages = response.data.data.last_page;
-          this.error = {};
-        })
-        .catch(error => {
-          this.error = error.response.data.errors;
-        });
-    },
+
      getCompartilhamentos: function(){
       axios.get("/api/compartilhamento/lista/?page=" + this.page + "&sort=&per_page=10", this.httpOptions)
         .then(response => {
@@ -136,7 +129,7 @@ export default {
         page = this.totalPages;
 
       this.page = page;
-      this.processForm();
+      this.getCompartilhamentos();
     },
 
     aceita: function(compartilhamento) {
