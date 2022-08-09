@@ -101,7 +101,18 @@ export default {
   },  
 
   methods: {
-     
+      processForm: function() {
+      axios.get("/api/compartilhamento/lista?sort=&per_page=10&page=" + this.page, this.httpOptions)
+        .then(response => {
+          this.items = response.data.data.data;
+          this.page = response.data.data.current_page;
+          this.totalPages = response.data.data.last_page;
+          this.error = {};
+        })
+        .catch(error => {
+          this.error = error.response.data.errors;
+        });
+    },
      getCompartilhamentos: function(){
       axios.get("/api/compartilhamento/lista/?page=" + this.page + "&sort=&per_page=10", this.httpOptions)
         .then(response => {
@@ -138,7 +149,7 @@ export default {
     },
 
     cancela: function(compartilhamento) {
-      this.$router.push({ name: 'cancela-compartilhamento', params: {compartilhamento: compartilhamento}});
+      this.$router.push({ name: 'cancela-compartilhamento', params: {compartilhamento: compartilhamento, lista: true}});
     }
   }
 }

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="bloco-descricao" v-if="this.$root.credentials">
     <div class="item-descricao"></div>
-    <h1>Descrição do Item</h1>
+    <h1 class="form-title">Descrição do Item</h1>
     <ul>
       <li>Nome: {{ item.nome }}</li>
       <li>Descrição: {{ item.descricao }}</li>
@@ -9,7 +9,7 @@
       <button @click="compartilhador()">Compartilhar</button>
 
       <div v-if="compartilhar">
-      <form @submit.prevent="postarCompartilhamento()">
+      <form class="form-items-compartilhados row" @submit.prevent="postarCompartilhamento()">
         <div class="form-group">
           <label >Email do usuário</label>
           <input type="text" class="form-control" placeholder="Entre o email do usuário que receberá o item" v-model="formulario.email">
@@ -30,17 +30,33 @@
         <button type="submit" class="btn btn-primary">Envia</button>
       </form>
       </div>
-      <div v-for= "uso in this.compartilhamentos">
-        <div class="usos-item">
-          <h4>Usos: {{uso.id}}</h4>
-          <li>data de início: {{ uso.dataInicio }}</li>
-          <li>data de término: {{ uso.dataTermino }}</li>
-          <li>nome do usuário que receberá o item: {{ uso.nomeUsuario }}</li>
-          <li>Status do compartilhamento: {{ uso.status }}</li>
-          <button @click="removerCompartilhamentos(uso.id)">Cancelar compartilhamento</button>
-          
-      </div>
-    </div>
+      <table class="table table-striped" id="tbItens">
+        <thead>
+          <tr>
+            <th>Id do uso</th>
+            <th>Usuário</th>
+            <th>Data de Início</th>
+            <th>Data de Término</th>
+            <th>Status</th>
+            <th class="commands"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <template>
+            <tr v-for="uso in this.compartilhamentos">
+              <td>{{uso.id}}</td>
+              <td>{{uso.nomeUsuario}}</td>
+              <td>{{uso.dataInicio}}</td>
+              <td>{{uso.dataTermino}}</td>
+              <td>{{uso.status}}</td>
+              <button class="btn btn-primary" @click="cancela(uso)">Cancelar compartilhamento</button>
+            
+            </tr>
+          </template>
+        </tbody>
+      </table>
+      
       
     </ul>
     
@@ -100,7 +116,7 @@
         .then(response => {
           this.error = {};
           console.log("SUCESSOOOOOO");
-          this.goBackToList;
+          this.goBackToList();
           //setTimeout(this.goBackToList, 3000);
         })
         .catch(error => {
@@ -121,6 +137,9 @@
         .catch(error => {
           this.error = error.response.data.errors;
         });
+    },
+    cancela: function(compartilhamento) {
+      this.$router.push({ name: 'cancela-compartilhamento', params: {compartilhamento: compartilhamento, lista: false}});
     },
     removerCompartilhamentos: function(compartilhamentoId){
       axios.delete("/api/compartilhamento/" + compartilhamentoId, this.httpOptions)
@@ -144,9 +163,8 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
-    width: 500px;
+    width: auto;
     height: 1000px;
-    background-color: gray;
     border-radius: 2px;
 }
 

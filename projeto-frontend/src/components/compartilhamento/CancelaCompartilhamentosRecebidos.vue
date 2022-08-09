@@ -25,7 +25,7 @@
         <p class="label"><label>Data de Término</label></p>
         <p class="text" >{{compartilhamento.dataTermino}}</p>
 
-        <button type="submit" class="btn btn-danger" @click="cancela">Sim, cancelar o compartilhamento</button>
+        <button type="submit" class="btn btn-danger" @click="cancela()">Sim, cancelar o compartilhamento</button>
       </div>
     </div>
   </div>
@@ -35,12 +35,13 @@
 import axios from 'axios';
 
 export default {
-  props: ['compartilhamento'],
+  props: ['compartilhamento', 'lista'],
 
   data() {
     return {
       error: false,
       success: false,
+      item: this.compartilhamento,
 
       httpOptions: {
           baseURL: this.$root.config.url,
@@ -52,14 +53,18 @@ export default {
       },
     }
   },
-
+  
   methods: {
     cancela: function() {
       axios.delete("/api/compartilhamento/" + this.compartilhamento.id, this.httpOptions)
         .then(response => {
           this.success = true;
           this.error = false;
-          setTimeout(this.goBackToList, 3000);
+          if(this.lista == true){
+            setTimeout(this.goBackToCompartilhamentos, 3000);
+          }else{
+            setTimeout(this.goBackToList, 3000);
+          }
         })
         .catch(error => {
           this.error = true;
@@ -67,9 +72,12 @@ export default {
         });
     },
 
-    goBackToList: function() {
+    goBackToCompartilhamentos: function() {
       this.$router.replace('/compartilhamento/lista');
-    }
+    },
+    goBackToList: function() {
+      this.$router.replace('/item/list');
+    },
   }
 }
 </script>
