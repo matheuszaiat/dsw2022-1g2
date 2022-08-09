@@ -107,7 +107,7 @@ export default {
   methods: {
 
      getCompartilhamentos: function(){
-      axios.get("/api/compartilhamento/lista/?page=" + this.page + "&sort=&per_page=10", this.httpOptions)
+      axios.get("/api/compartilhamento/lista/?page=" + this.page + "&sort=&per_page=20", this.httpOptions)
         .then(response => {
           //this.success = true;
           this.page = response.data.data.current_page;
